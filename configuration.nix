@@ -97,6 +97,23 @@
     xterm
   ];
 
+  services.resolved = {
+      enable = true;
+      settings.Resolve = {
+        DNSSEC = "true";
+        DNSOverTLS = "true";
+        Domains = [ "~." ];
+        FallbackDNS = [ ]; # можно вообще убрать строку — дефолтный fallback всё равно не сработает, т.к. DNS= задан
+      };
+    };
+
+  networking.nameservers = [
+    "1.1.1.1#cloudflare-dns.com"
+    "1.0.0.1#cloudflare-dns.com"
+    "2606:4700:4700::1111#cloudflare-dns.com"
+    "2606:4700:4700::1001#cloudflare-dns.com"
+  ];
+
   # Do not install KDE applications that are not used in this setup.
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     qrca          # QR-code scanner
