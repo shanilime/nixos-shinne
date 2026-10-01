@@ -12,8 +12,46 @@
   # ---------------------------------------------------------------------------
 
   # Use systemd-boot for UEFI systems.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  #
+  # Windows is expected to be installed on a separate SSD/EFI partition.
+  # The Windows EFI device handle is hardware-specific, so it must be filled
+  # in once after installation. See the comments below for the exact value.
+  boot.loader = {
+    # Allow NixOS to create/update its UEFI boot entry.
+    efi.canTouchEfiVariables = true;
+
+    systemd-boot = {
+      enable = true;
+
+      # Add Windows from a separate EFI System Partition.
+      #
+      # After installing both operating systems, boot the EDK2 UEFI Shell
+      # from the systemd-boot menu and run:
+      #
+      #   map -c
+      #
+      # Find the HD... device whose EFI partition contains:
+      #
+      #   EFI\Microsoft\Boot\bootmgfw.efi
+      #
+      # Then replace REPLACE_ME below with that HD... device handle.
+      # Example: efiDeviceHandle = "HD0d1";
+      windows = {
+        windows = {
+          title = "Windows";
+          efiDeviceHandle = "REPLACE_ME";
+          sortKey = "y_windows";
+        };
+      };
+
+      # Keep an EDK2 UEFI Shell available for finding the Windows EFI
+      # device handle and for UEFI-level troubleshooting.
+      edk2-uefi-shell = {
+        enable = true;
+        sortKey = "z_edk2";
+      };
+    };
+  };
 
   # ---------------------------------------------------------------------------
   # Basic system settings
