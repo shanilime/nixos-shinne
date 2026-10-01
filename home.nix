@@ -102,6 +102,13 @@ in
 
   # Keep the full original application set. Unused applications can be removed later.
   home.packages = with pkgs; [
+    (kdePackages.spectacle.override {
+      tesseractLanguages = [
+        "eng"
+        "rus"
+        "ukr"
+      ];
+    })
     # Editors / development tools
     neovim
     ripgrep
