@@ -128,7 +128,6 @@ in
     cmake
     gradle_9
     rustup
-    pince
     bore-cli
 
     # Browsers / media
@@ -146,7 +145,6 @@ in
     # Communication
     telegram-desktop
     vesktop
-    gajim
     anydesk
     rustdesk
     localsend
