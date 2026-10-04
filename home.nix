@@ -96,6 +96,38 @@ in
   # GitHub CLI is available for GitHub-related tasks; authentication is configured manually.
   programs.gh.enable = true;
 
+  programs.kitty = {
+    enable = true;
+
+    # Keep the existing JetBrains Mono Nerd Font setup from configuration.nix.
+    font = {
+      name = "JetBrainsMono Nerd Font Propo";
+      size = 11;
+    };
+
+    # The current Alacritty palette is Tokyo Night, so use the maintained Kitty theme.
+    themeFile = "tokyo_night_night";
+
+    shellIntegration = {
+      enableZshIntegration = true;
+    };
+
+    settings = {
+      background_opacity = 1.0;
+      enable_audio_bell = false;
+      scrollback_lines = 10000;
+      confirm_os_window_close = 0;
+      update_check_interval = 0;
+      enabled_layouts = "grid";
+      tab_bar_style = "separator";
+    };
+
+    keybindings = {
+      "shift+super+enter" = "new_tab";
+      "shift+enter" = "new_window";
+    };
+  };
+
   # ---------------------------------------------------------------------------
   # User applications
   # ---------------------------------------------------------------------------
@@ -136,7 +168,6 @@ in
     mpv
 
     # Desktop / graphics
-    alacritty
     obs-studio
     qimgv
     gimp
